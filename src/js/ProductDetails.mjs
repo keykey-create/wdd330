@@ -17,17 +17,11 @@ export default class ProductDetails {
   }
 
 
-addProductToCart(product) {
-  const storedCart = getLocalStorage("so-cart");
-  const cart = Array.isArray(storedCart)
-    ? storedCart
-    : storedCart
-      ? [storedCart]
-      : [];
-
-  cart.push(product);
-  setLocalStorage("so-cart", cart);
-}
+  addProductToCart() {
+    const cartItems = getLocalStorage("so-cart") || [];
+    cartItems.push(this.product);
+    setLocalStorage("so-cart", cartItems);
+  }
 
   renderProductDetails() {
     productDetailsTemplate(this.product);
