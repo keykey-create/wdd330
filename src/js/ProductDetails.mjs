@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, updateCartCount } from "./utils.mjs";
 
 export default class ProductDetails {
 
@@ -18,27 +18,48 @@ export default class ProductDetails {
 
 
   addProductToCart() {
-    const cartItems = getLocalStorage("so-cart") || [];
+    let cartItems = getLocalStorage("so-cart");
+    if (!Array.isArray(cartItems)) {
+      cartItems = [];
+    }
     cartItems.push(this.product);
     setLocalStorage("so-cart", cartItems);
+
+    // refresh the number on the backpack icon
+    updateCartCount();
   }
 
   renderProductDetails() {
-    productDetailsTemplate(this.product);
+    const section = document.querySelector(".product-detail");
+
+    // check if the product is discounted
+    let discountHtml = "";
+    if (this.product.FinalPrice < this.product.SuggestedRetailPrice) {
+      const difference = this.product.SuggestedRetailPrice - this.product.FinalPrice;
+      const percent = Math.round((difference / this.product.SuggestedRetailPrice) * 100);
+
+      discountHtml = `
+        <p class="discount-flag">${percent}% OFF</p>
+        <p class="original-price">Was $${this.product.SuggestedRetailPrice.toFixed(2)}</p>`;
+    }
+
+    section.innerHTML = `
+      <h3>${this.product.Brand.Name}</h3>
+      <h2 class="divider">${this.product.NameWithoutBrand}</h2>
+      <img
+        class="divider"
+        src="${this.product.Image}"
+        alt="${this.product.Name}"
+      />
+      <p class="product-card__price">$${this.product.FinalPrice}</p>
+      ${discountHtml}
+      <p class="product__color">${this.product.Colors[0].ColorName}</p>
+      <p class="product__description">${this.product.DescriptionHtmlSimple}</p>
+      <div class="product-detail__add">
+        <button id="addToCart" data-id="${this.product.Id}">Add to Cart</button>
+      </div>
+    `;
+
+    document.title = `Sleep Outside | ${this.product.Name}`;
   }
-}
-
-function productDetailsTemplate(product) {
-  document.querySelector('h2').textContent = product.Brand.Name;
-  document.querySelector('h3').textContent = product.NameWithoutBrand;
-
-  const productImage = document.getElementById('productImage');
-  productImage.src = product.Image;
-  productImage.alt = product.NameWithoutBrand;
-
-  document.getElementById('productPrice').textContent = product.FinalPrice;
-  document.getElementById('productColor').textContent = product.Colors[0].ColorName;
-  document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
-
-  document.getElementById('addToCart').dataset.id = product.Id;
 }

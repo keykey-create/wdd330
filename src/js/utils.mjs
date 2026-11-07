@@ -25,15 +25,41 @@ export function setClick(selector, callback) {
 export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get(param);
-  return product
+  return urlParams.get(param);
 }
 
-export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
-  const htmlStrings = list.map(template);
-
+// build the html for each item in the list and put it inside the parent element
+export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin",
+  clear = false,) {
+  // empty the element first if clear is true
   if (clear) {
     parentElement.innerHTML = "";
   }
+
+  const htmlStrings = list.map(templateFn);
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+}
+
+// show how many items are in the cart on the backpack icon
+export function updateCartCount() {
+  const countElement = qs(".cart-count");
+
+  // some pages may not have the badge
+  if (!countElement) {
+    return;
+  }
+
+  const cartItems = getLocalStorage("so-cart");
+  let count = 0;
+  if (Array.isArray(cartItems)) {
+    count = cartItems.length;
+  }
+
+  if (count > 0) {
+    countElement.textContent = count;
+    countElement.classList.remove("hide");
+  } else {
+    // nothing in the cart, hide the badge
+    countElement.classList.add("hide");
+  }
 }
