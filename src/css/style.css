@@ -94,6 +94,42 @@ p {
   margin-top: -1.7em;
 }
 
+/* Newsletter Signup button */
+.newsletter-signup {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.newsletter-signup h2 {
+  margin-top: 0;
+}
+
+.newsletter-signup form {
+  margin-top: 10px;
+}
+
+.newsletter-signup input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+.newsletter-signup button[type="submit"] {
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: darkgreen;
+}
+
+.newsletter-signup button[type="submit"]:hover {
+  background-color: blue;
+}
+
 /* utility classes */
 .highlight {
   color: var(--tertiary-color);
