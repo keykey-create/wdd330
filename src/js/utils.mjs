@@ -29,9 +29,15 @@ export function getParam(param) {
 }
 
 // build the html for each item in the list and put it inside the parent element
-export function renderListWithTemplate(templateFn, parentElement, list) {
+export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin",
+  clear = false,) {
+  // empty the element first if clear is true
+  if (clear) {
+    parentElement.innerHTML = "";
+  }
+
   const htmlStrings = list.map(templateFn);
-  parentElement.innerHTML = htmlStrings.join("");
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 
 // show how many items are in the cart on the backpack icon

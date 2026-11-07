@@ -9,7 +9,7 @@ const listElement = document.querySelector(".product-list");
 // only the tents that have a detail page
 const idsToShow = ["880RR", "985RF", "985PR", "344YJ"];
 
-const myList = new ProductList(dataSource, listElement, idsToShow);
+const myList = new ProductList("tents", dataSource, listElement, idsToShow);
 myList.init();
 
 const alert = new Alert();
