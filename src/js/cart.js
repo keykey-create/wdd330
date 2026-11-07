@@ -56,7 +56,8 @@ function renderCartTotal(cartItems) {
 
   // show the footer and write the total inside it
   document.querySelector(".cart-footer").classList.remove("hide");
-  document.querySelector(".cart-total").innerHTML = `Total: $${total.toFixed(2)}`;
+  document.querySelector(".cart-total").innerHTML =
+    `Total: $${total.toFixed(2)}`;
 }
 
 function cartItemTemplate(item) {
