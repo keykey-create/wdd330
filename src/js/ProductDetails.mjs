@@ -14,6 +14,12 @@ export default class ProductDetails {
     document
       .getElementById('addToCart')
       .addEventListener('click', this.addProductToCart.bind(this));
+    
+    document
+      .getElementById("commentForm")
+      .addEventListener("submit", this.addComment.bind(this));
+    
+    this.renderComments();
   }
 
 
@@ -28,6 +34,7 @@ export default class ProductDetails {
     // refresh the number on the backpack icon
     updateCartCount();
   }
+
 
   renderProductDetails() {
     const section = document.querySelector(".product-detail");
@@ -61,5 +68,41 @@ export default class ProductDetails {
     `;
 
     document.title = `Sleep Outside | ${this.product.Name}`;
+  }
+
+  getComments() {
+    return getLocalStorage(`comments-${this.productId}`) || [];
+  }
+
+  renderComments() {
+    const commentsList = document.querySelector("#commentsList");
+    const comments = this.getComments();
+
+    commentsList.innerHTML = "";
+
+    comments.forEach((comment) => {
+      const paragraph = document.createElement("p");
+      paragraph.textContent = comment;
+      commentsList.appendChild(paragraph);
+    });
+  }
+
+  addComment(event) {
+    event.preventDefault();
+
+    const commentInput = document.querySelector("#commentInput");
+    const comment = commentInput.value.trim();
+
+    if (comment === "") {
+      return;
+    }
+
+    const comments = this.getComments();
+    comments.push(comment);
+    
+    setLocalStorage(`comments-${this.productId}`, comments);
+    commentInput.value = "";
+
+    this.renderComments();
   }
 }

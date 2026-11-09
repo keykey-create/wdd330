@@ -359,3 +359,68 @@ footer {
   text-align: center;
   font-weight: bold;
 }
+
+/* Product Comments */
+
+.product-comments {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--light-grey);
+  border-radius: 8px;
+  background-color: #f7f7f7;
+}
+
+.product-comments h2 {
+  margin-bottom: 1.5rem;
+  color: var(--dark-grey);
+}
+
+#commentForm label {
+  font-weight: bold;
+}
+
+#commentInput {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  border: 1px solid var(--light-grey);
+  border-radius: 5px;
+  resize: vertical;
+}
+
+#commentInput:focus {
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+#commentForm button {
+  align-self: flex-start;
+  margin: 0;
+  border-radius: 5px;
+}
+
+#commentsList {
+  margin-top: 1.5rem;
+}
+
+#commentsList p {
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  background-color: white;
+  border: 1px solid var(--light-grey);
+  border-left: 4px solid var(--primary-color);
+  border-radius: 5px;
+  overflow-wrap: anywhere;
+}
+
+@media screen and (min-width: 700px) {
+  .product-comments {
+    padding: 2rem;
+  }
+
+  #commentInput {
+    min-height: 120px;
+  }
+}
