@@ -15,8 +15,11 @@ function productCardTemplate(product) {
   }
 
   return `<li class="product-card">
-    <a href="product_pages/index.html?product=${product.Id}">
-      <img src="${product.Image}" alt="${product.Name}" />
+    <a href="/product_pages/index.html?product=${product.Id}">
+      <picture>
+        <source media="(min-width: 700px)" srcset="${product.Images.PrimaryLarge}" />
+        <img src="${product.Images.PrimaryMedium}" alt="${product.Name}" />
+      </picture>
       <h3 class="card__brand">${product.Brand.Name}</h3>
       <h2 class="card__name">${product.NameWithoutBrand}</h2>
       <p class="product-card__price">$${product.FinalPrice}</p>
@@ -26,26 +29,30 @@ function productCardTemplate(product) {
 }
 
 export default class ProductList {
-  constructor(category, dataSource, listElement, idsToShow) {
+  constructor(category, dataSource, listElement) {
     this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
-    this.idsToShow = idsToShow;
   }
 
   async init() {
-    // get all the products from the json file
-    const list = await this.dataSource.getData();
-
-    // keep only the products that have a detail page
-    const filteredList = list.filter((product) =>
-      this.idsToShow.includes(product.Id)
-    );
-
-    this.renderList(filteredList);
+    // get the products of this category from the API
+    const list = await this.dataSource.getData(this.category);
+    this.renderList(list);
   }
 
   renderList(list) {
     renderListWithTemplate(productCardTemplate, this.listElement, list);
+  }
+
+  async initSearch(term) {
+    const list = await this.dataSource.searchProducts(term);
+
+    if (list.length === 0) {
+      this.listElement.innerHTML = "<li>No products found.</li>";
+      return;
+    }
+
+    this.renderList(list);
   }
 }

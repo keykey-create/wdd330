@@ -38,6 +38,9 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
 
   const htmlStrings = list.map(templateFn);
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+
+
+
 }
 
 // show how many items are in the cart on the backpack icon
@@ -62,4 +65,32 @@ export function updateCartCount() {
     // nothing in the cart, hide the badge
     countElement.classList.add("hide");
   }
+}
+
+
+export function renderWithTemplate (template, parentElement, data, callback) {
+   parentElement.innerHTML = template;
+  if (callback) {
+    callback(data);
+  }
+}
+
+// get the html text of a file
+export async function loadTemplate(path) {
+  const response = await fetch(path);
+  const template = await response.text();
+  return template;
+}
+
+// load the header and the footer into the page
+export async function loadHeaderFooter() {
+  const headerTemplate = await loadTemplate("/partials/header.html");
+  const footerTemplate = await loadTemplate("/partials/footer.html");
+
+  const headerElement = qs("#main-header");
+  const footerElement = qs("#main-footer");
+
+  // the callback updates the cart number AFTER the header exists
+  renderWithTemplate(headerTemplate, headerElement, null, updateCartCount);
+  renderWithTemplate(footerTemplate, footerElement);
 }

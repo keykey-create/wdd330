@@ -31,14 +31,15 @@
 //   .addEventListener("click", addToCartHandler);
 
 // I commented out the old code in case we need it , but this is the refactored code
-import { getParam, updateCartCount } from "./utils.mjs";
+import { getParam, updateCartCount, loadHeaderFooter } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
-const dataSource = new ProductData("tents");
+const dataSource = new ProductData();
 const productID = getParam("product");
 
 const product = new ProductDetails(productID, dataSource);
 product.init();
 
+loadHeaderFooter();
 updateCartCount();
