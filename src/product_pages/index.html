@@ -13,6 +13,21 @@
 
     <main class="divider">
       <section class="product-detail"></section>
+      <section class="product-comments">
+        <h2>Product Comments</h2>
+
+        <form id="commentForm">
+          <label for="commentInput">Write a comment:</label>
+          <textarea
+            id="commentInput"
+            placeholder="Share your thoughts about this product..."
+            required
+          ></textarea>
+          <button type="submit">Send comment</button>
+        </form>
+
+        <div id="commentsList"></div>
+      </section>
     </main>
 
     <footer id="main-footer"></footer>
