@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/main.js" type="module"></script>
     <script src="/js/newsletter.js" type="module"></script>
+    <script src="/js/cta.js" type="module"></script>
   </head>
 
   <body>
@@ -22,6 +23,24 @@
           <img src="/images/noun_Tent_2517.svg" alt="tent image for logo" />
           <div>Sleep<span class="highlight">Outside</span></div>
         </div>
+        <section class="cta-banner">
+          <h2>Join the Sleep Outside Adventure Membership Club</h2>
+          <p>
+            Sign up for exclusive gear discounts and camping guides, and details
+            on our give away!!
+          </p>
+          <form id="cta-form">
+            <input
+              type="email"
+              id="cta-email"
+              placeholder="Enter your email"
+              required
+            />
+            <button type="submit" class="cta-btn">Sign Up</button>
+          </form>
+          <p id="cta-message" class="hidden"></p>
+        </section>
+
         <div class="mission">
           <p>
             Our mission is to provide you with everything you need to sleep
