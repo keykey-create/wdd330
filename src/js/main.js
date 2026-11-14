@@ -1,6 +1,6 @@
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
-import { updateCartCount } from "./utils.mjs";
+import { loadHeaderFooter } from "./utils.mjs";
 import Alert from "./Alert.js";
 
 const dataSource = new ProductData("tents");
@@ -15,4 +15,4 @@ myList.init();
 const alert = new Alert();
 alert.init();
 
-updateCartCount();
+loadHeaderFooter();
