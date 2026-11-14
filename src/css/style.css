@@ -234,6 +234,15 @@ button {
 .cart-card__quantity {
   grid-row: 1;
   grid-column: 3;
+  padding: 0.5rem;
+}
+
+.cart-card__quantity input {
+  display: block;
+  width: 100%;
+  min-width: 3rem;
+  padding: 0.4rem;
+  font: inherit;
 }
 
 .cart-card__price {
