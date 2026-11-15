@@ -10,6 +10,11 @@ export default class ProductDetails {
 
   async init() {
     this.product = await this.dataSource.findProductById(this.productId);
+    if (!this.product) {
+      document.querySelector(".product-detail").innerHTML =
+        "<p>Product not found.</p>";
+      return;
+    }
     this.renderProductDetails();
     document
       .getElementById('addToCart')

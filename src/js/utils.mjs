@@ -40,9 +40,33 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
+  if (callback) {
+    callback(data);
+  }
+}
+
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  const template = await res.text();
+  return template;
+}
+
+export async function loadHeaderFooter() {
+  const headerTemplate = await loadTemplate("/partials/header.html");
+  const footerTemplate = await loadTemplate("/partials/footer.html");
+
+  const headerElement = document.querySelector("#main-header");
+  const footerElement = document.querySelector("#main-footer");
+
+  renderWithTemplate(headerTemplate, headerElement, null, updateCartCount);
+  renderWithTemplate(footerTemplate, footerElement);
+}
+
 // show how many items are in the cart on the backpack icon
 export function updateCartCount() {
-  const countElement = qs(".cart-count");
+  const countElement = document.querySelector(".cart-count");
 
   // some pages may not have the badge
   if (!countElement) {
@@ -63,3 +87,4 @@ export function updateCartCount() {
     countElement.classList.add("hide");
   }
 }
+
