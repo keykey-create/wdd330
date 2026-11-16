@@ -16,33 +16,37 @@ function productCardTemplate(product) {
 
   return `<li class="product-card">
     <a href="/product_pages/index.html?product=${product.Id}">
-      <img src="${product.Image}" alt="${product.Name}" />
+      <picture>
+        <source media="(min-width: 700px)" srcset="${product.Images.PrimaryLarge}"/>
+        <img src="${product.Images.PrimaryMedium}" alt="${product.Name}" />
+      </picture>
       <h3 class="card__brand">${product.Brand.Name}</h3>
-      <h2 class="card__name">${product.NameWithoutBrand}</h2>
+      <p class="card__name">${product.NameWithoutBrand}</p>
       <p class="product-card__price">$${product.FinalPrice}</p>
       ${discountHtml}
     </a>
   </li>`;
 }
 
+const categoryName = {
+  tents: "Tents",
+  backpacks: "Backpacks",
+  "sleeping-bags": "Sleeping Bags",
+  hammocks: "Hammocks",
+};
+
 export default class ProductList {
-  constructor(category, dataSource, listElement, idsToShow) {
+  constructor(category, dataSource, listElement) {
     this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
-    this.idsToShow = idsToShow;
   }
 
   async init() {
     // get all the products from the json file
-    const list = await this.dataSource.getData();
-
-    // keep only the products that have a detail page
-    const filteredList = list.filter((product) =>
-      this.idsToShow.includes(product.Id)
-    );
-
-    this.renderList(filteredList);
+    const list = await this.dataSource.getData(this.category);
+    this.renderList(list);
+    document.querySelector(".title").textContent = categoryName[this.category] ?? this.category;
   }
 
   renderList(list) {

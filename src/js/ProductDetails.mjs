@@ -38,6 +38,8 @@ export default class ProductDetails {
 
     // refresh the number on the backpack icon
     updateCartCount();
+
+
   }
 
 
@@ -58,11 +60,15 @@ export default class ProductDetails {
     section.innerHTML = `
       <h3>${this.product.Brand.Name}</h3>
       <h2 class="divider">${this.product.NameWithoutBrand}</h2>
-      <img
-        class="divider"
-        src="${this.product.Image}"
-        alt="${this.product.Name}"
-      />
+      <picture>
+        <source media="(min-width: 900px)" srcset="${this.product.Images.PrimaryExtraLarge}" />
+        <source media="(min-width: 500px)" srcset="${this.product.Images.PrimaryLarge}" />
+        <img
+          class="divider"
+          src="${this.product.Images.PrimaryMedium}"
+          alt="${this.product.Name}"
+        />
+      </picture>
       <p class="product-card__price">$${this.product.FinalPrice}</p>
       ${discountHtml}
       <p class="product__color">${this.product.Colors[0].ColorName}</p>
@@ -74,6 +80,8 @@ export default class ProductDetails {
 
     document.title = `Sleep Outside | ${this.product.Name}`;
   }
+
+  
 
   getComments() {
     return getLocalStorage(`comments-${this.productId}`) || [];
@@ -111,3 +119,4 @@ export default class ProductDetails {
     this.renderComments();
   }
 }
+
