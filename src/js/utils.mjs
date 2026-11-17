@@ -25,18 +25,20 @@ export function setClick(selector, callback) {
 export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  return urlParams.get(param);
+  const product = urlParams.get(param);
+  return product;
 }
 
 // build the html for each item in the list and put it inside the parent element
 export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin",
   clear = false,) {
+  const htmlStrings = list.map(templateFn);
   // empty the element first if clear is true
   if (clear) {
     parentElement.innerHTML = "";
   }
 
-  const htmlStrings = list.map(templateFn);
+  
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 
