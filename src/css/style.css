@@ -490,6 +490,52 @@ footer {
   overflow-wrap: anywhere;
 }
 
+/* ==========================================================================
+   CHECKOUT PAGE
+   ========================================================================== */
+.checkout-button {
+  display: inline-block;
+  padding: 0.5em 2em;
+  background-color: var(--secondary-color);
+  color: white;
+  text-decoration: none;
+  font-size: var(--large-font);
+}
+
+#checkout-form fieldset {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--light-grey);
+}
+
+#checkout-form legend {
+  padding: 0 0.5rem;
+  font-weight: bold;
+}
+
+#checkout-form label {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+#checkout-form input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.4rem;
+}
+
+.order-summary {
+  margin-bottom: 1rem;
+}
+
+.order-summary p {
+  padding: 0.25rem 0;
+}
+
+.order-total {
+  font-weight: bold;
+}
+
 @media screen and (min-width: 700px) {
   .product-comments {
     padding: 2rem;
