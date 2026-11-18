@@ -1,7 +1,7 @@
 // import { setLocalStorage, getLocalStorage, getParam } from "./utils.mjs";
-// import ProductData from "./ProductData.mjs";
+// import ExternalServices from "./ExternalServices.mjs";
 // // import { getLocalStorage, setLocalStorage } from "./utils.mjs";
-// const dataSource = new ProductData("tents");
+// const dataSource = new ExternalServices("tents");
 
 // function addProductToCart(product) {
 //   const storedCart = getLocalStorage("so-cart");
@@ -32,10 +32,10 @@
 
 // I commented out the old code in case we need it , but this is the refactored code
 import { getParam, loadHeaderFooter } from "./utils.mjs";
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
-const dataSource = new ProductData("tents");
+const dataSource = new ExternalServices("tents");
 const productID = getParam("product");
 
 const product = new ProductDetails(productID, dataSource);
