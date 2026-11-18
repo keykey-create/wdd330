@@ -78,7 +78,7 @@ export function updateCartCount() {
   const cartItems = getLocalStorage("so-cart");
   let count = 0;
   if (Array.isArray(cartItems)) {
-    count = cartItems.length;
+    count = cartItems.reduce((total, item) => total + (item.Quantity || 1), 0);
   }
 
   if (count > 0) {

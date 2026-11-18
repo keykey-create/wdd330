@@ -33,7 +33,14 @@ export default class ProductDetails {
     if (!Array.isArray(cartItems)) {
       cartItems = [];
     }
-    cartItems.push(this.product);
+
+    const existingItem = cartItems.find((item) => item.Id === this.product.Id);
+    if (existingItem) {
+      existingItem.Quantity = (existingItem.Quantity || 1) + 1;
+    } else {
+      cartItems.push({ ...this.product, Quantity: 1 });
+    }
+
     setLocalStorage("so-cart", cartItems);
 
     // refresh the number on the backpack icon
