@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { removeAllAlerts, getLocalStorage, alertMessage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 const services = new ExternalServices();
@@ -82,21 +82,25 @@ export default class CheckoutProcess {
     orderTotal.innerText = `$${this.orderTotal.toFixed(2)}`;
   }
 
-  async checkout(form) {
-    // calculate again, in case the zip code was never "changed" (example: autofill)
-    this.calculateOrderTotal();
+  async checkout() {
+    const form = document.forms.checkout;
+    const payload = formDataToJSON(form);
+    payload.orderDate = new Date().toISOString();
+    payload.orderTotal = this.orderTotal;
+    payload.tax = this.tax;
+    payload.shipping = this.shipping;
+    payload.items = packageItems(this.list);
 
-    // the form data becomes the order object
-    const order = formDataToJSON(form);
-
-    // add the rest of the information the server needs
-    order.orderDate = new Date().toISOString();
-    order.orderTotal = this.orderTotal.toFixed(2);
-    order.tax = this.tax.toFixed(2);
-    order.shipping = this.shipping;
-    order.items = packageItems(this.list);
-
-    // send the order and return the answer of the server
-    return await services.checkout(order);
+    try {
+      await services.checkout(payload);
+      setLocalStorage(this.key, []);
+      window.location.assign("/checkout/success.html");
+    } catch (error) {
+      removeAllAlerts();
+      const messages = error.message && typeof error.message === "object"
+        ? Object.values(error.message)
+        : [error.message || "Unable to place your order."];
+      messages.forEach((message) => alertMessage(message));
+    }
   }
 }
