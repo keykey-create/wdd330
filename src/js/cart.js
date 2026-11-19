@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { loadHeaderFooter, getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 const listElement = document.querySelector(".product-list");
 const storedCart = getLocalStorage("so-cart");
@@ -55,3 +55,5 @@ listElement.addEventListener("change", (event) => {
 });
 
 renderCartContents();
+
+loadHeaderFooter();

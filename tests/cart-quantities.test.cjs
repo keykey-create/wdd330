@@ -14,6 +14,7 @@ function loadCart(stored) {
   let handler;
   const list = { innerHTML: "", addEventListener: (_, fn) => { handler = fn; } };
   vm.runInNewContext(source, {
+    loadHeaderFooter: () => {},
     document: { querySelector: () => list },
     getLocalStorage: () => saved && JSON.parse(JSON.stringify(saved)),
     setLocalStorage: (_, value) => { saved = JSON.parse(JSON.stringify(value)); },
