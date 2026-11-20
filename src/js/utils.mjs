@@ -90,3 +90,37 @@ export function updateCartCount() {
   }
 }
 
+export function alertMessage(message, scroll = true) {
+  const main = document.querySelector("main");
+  if (!main) {
+    throw new Error("Cannot display an alert without a main element.");
+  }
+
+  main.querySelectorAll(".alert").forEach((existingAlert) => {
+    existingAlert.remove();
+  });
+
+  const alert = document.createElement("div");
+  alert.classList.add("alert");
+  alert.setAttribute("role", "alert");
+  alert.setAttribute("aria-live", "assertive");
+
+  const alertText = document.createElement("p");
+  alertText.textContent =
+    typeof message === "string" ? message : JSON.stringify(message);
+
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.classList.add("alert__close");
+  closeButton.setAttribute("aria-label", "Dismiss message");
+  closeButton.textContent = "X";
+  closeButton.addEventListener("click", () => alert.remove());
+
+  alert.append(alertText, closeButton);
+  main.prepend(alert);
+
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
+}
+
