@@ -23,24 +23,51 @@
           <fieldset>
             <legend>Customer Name</legend>
             <label for="fname">First Name</label>
-            <input type="text" id="fname" name="fname" required />
+            <input
+              type="text"
+              id="fname"
+              name="fname"
+              autocomplete="given-name"
+              required
+            />
             <label for="lname">Last Name</label>
-            <input type="text" id="lname" name="lname" required />
+            <input
+              type="text"
+              id="lname"
+              name="lname"
+              autocomplete="family-name"
+              required
+            />
           </fieldset>
 
           <fieldset>
             <legend>Address</legend>
             <label for="street">Street Address</label>
-            <input type="text" id="street" name="street" required />
+            <input
+              type="text"
+              id="street"
+              name="street"
+              autocomplete="address-line1"
+              required
+            />
             <label for="city">City</label>
-            <input type="text" id="city" name="city" required />
+            <input
+              type="text"
+              id="city"
+              name="city"
+              autocomplete="address-level2"
+              required
+            />
             <label for="state">State</label>
             <input
               type="text"
               id="state"
               name="state"
+              pattern="[A-Za-z]{2}"
               maxlength="2"
               placeholder="ID"
+              autocomplete="address-level1"
+              title="Enter the two-letter state abbreviation."
               required
             />
             <label for="zip">Zip Code</label>
@@ -51,6 +78,8 @@
               inputmode="numeric"
               pattern="[0-9]{5}"
               maxlength="5"
+              autocomplete="postal-code"
+              title="Enter a 5-digit ZIP code."
               required
             />
           </fieldset>
@@ -65,6 +94,8 @@
               inputmode="numeric"
               pattern="[0-9]{16}"
               maxlength="16"
+              autocomplete="cc-number"
+              title="Enter a 16-digit credit card number."
               required
             />
             <label for="expiration">Expiration Date</label>
@@ -74,6 +105,8 @@
               name="expiration"
               placeholder="MM/YY"
               pattern="(0?[1-9]|1[0-2])/[0-9]{2}"
+              autocomplete="cc-exp"
+              title="Enter the expiration date as MM/YY."
               required
             />
             <label for="code">Security Code</label>
@@ -84,6 +117,8 @@
               inputmode="numeric"
               pattern="[0-9]{3,4}"
               maxlength="4"
+              autocomplete="cc-csc"
+              title="Enter the 3- or 4-digit security code."
               required
             />
           </fieldset>

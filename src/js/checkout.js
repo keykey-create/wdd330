@@ -16,10 +16,11 @@ const form = document.querySelector("#checkout-form");
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  try {
-    const response = await myCheckout.checkout(form);
-    console.log(response);
-  } catch (error) {
-    console.log(error);
+  const orderSucceeded = await myCheckout.checkout(form);
+  if (!orderSucceeded) {
+    return;
   }
+
+  localStorage.removeItem("so-cart");
+  window.location.href = "./success.html";
 });
