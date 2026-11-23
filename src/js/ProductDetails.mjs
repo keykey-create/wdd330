@@ -1,7 +1,6 @@
 import { getLocalStorage, setLocalStorage, updateCartCount } from "./utils.mjs";
 
 export default class ProductDetails {
-
   constructor(productId, dataSource) {
     this.productId = productId;
     this.product = {};
@@ -9,7 +8,18 @@ export default class ProductDetails {
   }
 
   async init() {
-    this.product = await this.dataSource.findProductById(this.productId);
+    if (!this.productId) {
+      document.querySelector(".product-detail").innerHTML =
+        "<p>Select a product from a category to view its details.</p>";
+      return;
+    }
+    try {
+      this.product = await this.dataSource.findProductById(this.productId);
+    } catch (error) {
+      document.querySelector(".product-detail").innerHTML =
+        "<p>Unable to load this product. Please refresh the page to try again.</p>";
+      return;
+    }
     if (!this.product) {
       document.querySelector(".product-detail").innerHTML =
         "<p>Product not found.</p>";
@@ -17,16 +27,15 @@ export default class ProductDetails {
     }
     this.renderProductDetails();
     document
-      .getElementById('addToCart')
-      .addEventListener('click', this.addProductToCart.bind(this));
-    
+      .getElementById("addToCart")
+      .addEventListener("click", this.addProductToCart.bind(this));
+
     document
       .getElementById("commentForm")
       .addEventListener("submit", this.addComment.bind(this));
-    
+
     this.renderComments();
   }
-
 
   addProductToCart() {
     let cartItems = getLocalStorage("so-cart");
@@ -45,10 +54,7 @@ export default class ProductDetails {
 
     // refresh the number on the backpack icon
     updateCartCount();
-
-
   }
-
 
   renderProductDetails() {
     const section = document.querySelector(".product-detail");
@@ -56,8 +62,11 @@ export default class ProductDetails {
     // check if the product is discounted
     let discountHtml = "";
     if (this.product.FinalPrice < this.product.SuggestedRetailPrice) {
-      const difference = this.product.SuggestedRetailPrice - this.product.FinalPrice;
-      const percent = Math.round((difference / this.product.SuggestedRetailPrice) * 100);
+      const difference =
+        this.product.SuggestedRetailPrice - this.product.FinalPrice;
+      const percent = Math.round(
+        (difference / this.product.SuggestedRetailPrice) * 100,
+      );
 
       discountHtml = `
         <p class="discount-flag">${percent}% OFF</p>
@@ -72,7 +81,7 @@ export default class ProductDetails {
         <source media="(min-width: 500px)" srcset="${this.product.Images.PrimaryLarge}" />
         <img
           class="divider"
-          src="${this.product.Images.PrimaryMedium}"
+          src="${this.product.Images.PrimaryLarge}"
           alt="${this.product.Name}"
         />
       </picture>
@@ -87,8 +96,6 @@ export default class ProductDetails {
 
     document.title = `Sleep Outside | ${this.product.Name}`;
   }
-
-  
 
   getComments() {
     return getLocalStorage(`comments-${this.productId}`) || [];
@@ -119,11 +126,10 @@ export default class ProductDetails {
 
     const comments = this.getComments();
     comments.push(comment);
-    
+
     setLocalStorage(`comments-${this.productId}`, comments);
     commentInput.value = "";
 
     this.renderComments();
   }
 }
-

@@ -7,7 +7,9 @@ function productCardTemplate(product) {
   // flag the product if it is discounted
   if (product.FinalPrice < product.SuggestedRetailPrice) {
     const difference = product.SuggestedRetailPrice - product.FinalPrice;
-    const percent = Math.round((difference / product.SuggestedRetailPrice) * 100);
+    const percent = Math.round(
+      (difference / product.SuggestedRetailPrice) * 100,
+    );
 
     discountHtml = `
       <p class="discount-flag">${percent}% OFF</p>
@@ -43,13 +45,30 @@ export default class ProductList {
   }
 
   async init() {
-    // get all the products from the json file
-    const list = await this.dataSource.getData(this.category);
-    this.renderList(list);
-    document.querySelector(".title").textContent = categoryName[this.category] ?? this.category;
+    document.querySelector(".title").textContent =
+      categoryName[this.category] ?? this.category;
+    document.title = `Sleep Outside | ${categoryName[this.category] ?? this.category}`;
+    this.listElement.innerHTML = "<li>Loading products...</li>";
+    try {
+      const list = await this.dataSource.getData(this.category);
+      this.renderList(list);
+      if (!list.length) {
+        this.listElement.innerHTML =
+          "<li>No products found in this category.</li>";
+      }
+    } catch (error) {
+      this.listElement.innerHTML =
+        "<li>Unable to load products. Please refresh the page to try again.</li>";
+    }
   }
 
   renderList(list) {
-    renderListWithTemplate(productCardTemplate, this.listElement, list);
+    renderListWithTemplate(
+      productCardTemplate,
+      this.listElement,
+      list,
+      "afterbegin",
+      true,
+    );
   }
 }
