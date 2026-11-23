@@ -1,4 +1,22 @@
 // wrapper for querySelector...returns matching element
+export function alertMessage(message, scroll = true) {
+  const main = document.querySelector("main");
+  main.querySelector(".alert")?.remove();
+  const alert = document.createElement("div");
+  alert.className = "alert";
+  alert.setAttribute("role", "alert");
+  const text = document.createElement("p");
+  text.textContent = message;
+  const close = document.createElement("button");
+  close.type = "button";
+  close.textContent = "×";
+  close.setAttribute("aria-label", "Dismiss message");
+  close.addEventListener("click", () => alert.remove());
+  alert.append(text, close);
+  main.prepend(alert);
+  if (scroll) window.scrollTo(0, 0);
+}
+
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }

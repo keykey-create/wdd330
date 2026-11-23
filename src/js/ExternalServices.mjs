@@ -3,12 +3,12 @@ const baseURL = (
   "https://wdd330-backend-osp8.onrender.com/"
 ).replace(/\/?$/, "/");
 
-function convertToJson(res) {
-  if (res.ok) {
-    return res.json();
-  } else {
-    throw new Error(`Request failed (${res.status})`);
+export async function convertToJson(res) {
+  const jsonResponse = await res.json();
+  if (!res.ok) {
+    throw { name: "servicesError", message: jsonResponse };
   }
+  return jsonResponse;
 }
 
 export default class ExternalServices {

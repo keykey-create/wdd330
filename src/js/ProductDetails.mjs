@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage, updateCartCount } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, updateCartCount, alertMessage } from "./utils.mjs";
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -54,6 +54,7 @@ export default class ProductDetails {
 
     // refresh the number on the backpack icon
     updateCartCount();
+    alertMessage(`${this.product.Name} was added to your cart.`, false);
   }
 
   renderProductDetails() {

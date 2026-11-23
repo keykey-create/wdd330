@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, alertMessage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 const services = new ExternalServices();
@@ -97,6 +97,25 @@ export default class CheckoutProcess {
     order.items = packageItems(this.list);
 
     // send the order and return the answer of the server
-    return await services.checkout(order);
+    try {
+      const response = await services.checkout(order);
+      setLocalStorage(this.key, []);
+      window.location.assign("/checkout/success.html");
+      return response;
+    } catch (error) {
+      // Error bodies can contain strings, arrays, or field-to-message objects.
+      const messages = (value) => {
+        if (typeof value === "string") return value;
+        if (Array.isArray(value)) return value.map(messages).join(" ");
+        if (value && typeof value === "object") {
+          return Object.entries(value)
+            .map(([key, detail]) => `${key}: ${messages(detail)}`)
+            .join(" ");
+        }
+        return "";
+      };
+      alertMessage(`Unable to submit your order. ${messages(error.message) || "Please try again."}`);
+      throw error;
+    }
   }
 }

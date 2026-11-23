@@ -532,6 +532,21 @@ footer {
   padding: 0.25rem 0;
 }
 
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid #9b6000;
+  background: #fff3cd;
+  color: #493000;
+}
+
+.alert p { margin: 0; overflow-wrap: anywhere; }
+.alert button { flex-shrink: 0; padding: 0.4rem 0.8rem; }
+
 .order-total {
   font-weight: bold;
 }
