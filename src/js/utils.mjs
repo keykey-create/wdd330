@@ -13,6 +13,12 @@ export function getLocalStorage(key) {
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
+
+// cart quantities are positive whole numbers
+export function normalizeQuantity(quantity) {
+  const value = Number(quantity);
+  return Number.isInteger(value) && value >= 1 ? value : 1;
+}
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
@@ -78,7 +84,10 @@ export function updateCartCount() {
   const cartItems = getLocalStorage("so-cart");
   let count = 0;
   if (Array.isArray(cartItems)) {
-    count = cartItems.reduce((total, item) => total + (item.Quantity || 1), 0);
+    count = cartItems.reduce(
+      (total, item) => total + normalizeQuantity(item.Quantity),
+      0,
+    );
   }
 
   if (count > 0) {

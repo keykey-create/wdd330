@@ -1,4 +1,4 @@
-import { alertMessage, getLocalStorage } from "./utils.mjs";
+import { alertMessage, getLocalStorage, normalizeQuantity } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 const services = new ExternalServices();
@@ -9,7 +9,7 @@ function packageItems(items) {
     id: item.Id,
     name: item.Name,
     price: item.FinalPrice,
-    quantity: item.Quantity || 1,
+    quantity: normalizeQuantity(item.Quantity),
   }));
 }
 
@@ -45,7 +45,7 @@ export default class CheckoutProcess {
     this.itemCount = 0;
     this.itemTotal = 0;
     for (const item of this.list) {
-      const quantity = item.Quantity || 1;
+      const quantity = normalizeQuantity(item.Quantity);
       this.itemCount = this.itemCount + quantity;
       this.itemTotal = this.itemTotal + item.FinalPrice * quantity;
     }
