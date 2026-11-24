@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage, updateCartCount, alertMessage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, updateCartCount, alertMessage, normalizeQuantity } from "./utils.mjs";
 
 export default class ProductDetails {
 
@@ -36,7 +36,7 @@ export default class ProductDetails {
 
     const existingItem = cartItems.find((item) => item.Id === this.product.Id);
     if (existingItem) {
-      existingItem.Quantity = (existingItem.Quantity || 1) + 1;
+      existingItem.Quantity = normalizeQuantity(existingItem.Quantity) + 1;
     } else {
       cartItems.push({ ...this.product, Quantity: 1 });
     }
