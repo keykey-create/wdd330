@@ -3,6 +3,7 @@ import {
   setLocalStorage,
   updateCartCount,
   loadHeaderFooter,
+  normalizeQuantity,
 } from "./utils.mjs";
 
 loadHeaderFooter();
@@ -31,6 +32,14 @@ function renderCartContents() {
   removeButtons.forEach((button) => {
     button.addEventListener("click", removeFromCart);
   });
+
+  // allow the desired quantity to be changed for each cart item
+  const quantityInputs = document.querySelectorAll(
+    ".cart-card__quantity-input",
+  );
+  quantityInputs.forEach((input) => {
+    input.addEventListener("change", changeCartQuantity);
+  });
 }
 
 function removeFromCart(event) {
@@ -53,12 +62,32 @@ function removeFromCart(event) {
   updateCartCount();
 }
 
+function changeCartQuantity(event) {
+  const input = event.currentTarget;
+  const id = input.dataset.id;
+  const cartItems = getLocalStorage("so-cart") || [];
+  const quantity = normalizeQuantity(input.value);
+  const matchingItems = cartItems.filter((cartItem) => cartItem.Id === id);
+
+  if (matchingItems.length === 0) {
+    return;
+  }
+
+  matchingItems.forEach((item) => {
+    item.Quantity = quantity;
+  });
+
+  setLocalStorage("so-cart", cartItems);
+  renderCartContents();
+  updateCartCount();
+}
+
 function renderCartTotal(cartItems) {
   let total = 0;
 
   // add up the price of each item
   for (const item of cartItems) {
-    total = total + item.FinalPrice * (item.Quantity || 1);
+    total = total + item.FinalPrice * normalizeQuantity(item.Quantity);
   }
 
   // show the footer and write the total inside it
@@ -80,8 +109,19 @@ function cartItemTemplate(item) {
     <h2 class="card__name">${item.Name}</h2>
   </a>
   <p class="cart-card__color">${item.Colors?.[0]?.ColorName || "No color specified"}</p>
-  <p class="cart-card__quantity">qty: ${item.Quantity || 1}</p>
-  <p class="cart-card__price">$${(item.FinalPrice * (item.Quantity || 1)).toFixed(2)}</p>
+  <p class="cart-card__quantity">
+    qty:
+    <input
+      class="cart-card__quantity-input"
+      type="number"
+      min="1"
+      step="1"
+      value="${normalizeQuantity(item.Quantity)}"
+      data-id="${item.Id}"
+      aria-label="Quantity for ${item.Name}"
+    />
+  </p>
+  <p class="cart-card__price">$${(item.FinalPrice * normalizeQuantity(item.Quantity)).toFixed(2)}</p>
 </li>`;
 
   return newItem;
