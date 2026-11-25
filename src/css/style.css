@@ -22,7 +22,9 @@
   margin: 1rem 0;
 }
 
-.product-sort label { font-weight: bold; }
+.product-sort label {
+  font-weight: bold;
+}
 .product-sort select {
   min-height: 44px;
   max-width: 100%;
@@ -32,8 +34,13 @@
   background: white;
   border: 1px solid var(--dark-grey);
 }
-.product-sort select:focus-visible { outline: 3px solid var(--tertiary-color); outline-offset: 3px; }
-#sort-status { font-size: 0.85em; }
+.product-sort select:focus-visible {
+  outline: 3px solid var(--tertiary-color);
+  outline-offset: 3px;
+}
+#sort-status {
+  font-size: 0.85em;
+}
 
 * {
   margin: 0;

@@ -25,6 +25,28 @@ export default class ProductDetails {
       .addEventListener("submit", this.addComment.bind(this));
     
     this.renderComments();
+
+    document
+      .getElementById("addToWishlist")
+      .addEventListener("click", this.addToWishlist.bind(this));
+  }
+
+  addToWishlist() {
+  let wishlist = getLocalStorage("so-wishlist") || [];
+  // Ensure wishlist is an array
+  if (!Array.isArray(wishlist)) {
+    wishlist = [];
+  }
+
+  // Prevent duplicates
+  const exists = wishlist.some((item) => item.Id === this.product.Id);
+  if (!exists) {
+    wishlist.push(this.product);
+    setLocalStorage("so-wishlist", wishlist);
+    alertMessage(`${this.product.NameWithoutBrand} added to your wishlist!`);
+  } else {
+    alertMessage("This item is already in your wishlist.");
+  }
   }
 
 
@@ -81,6 +103,7 @@ export default class ProductDetails {
       <p class="product__description">${this.product.DescriptionHtmlSimple}</p>
       <div class="product-detail__add">
         <button id="addToCart" data-id="${this.product.Id}">Add to Cart</button>
+        <button id="addToWishlist" class="wishlist-btn" data-id="">Add to Wishlist</button>
       </div>
     `;
 
