@@ -14,6 +14,10 @@ export default defineConfig({
         product: resolve(__dirname, "src/product_pages/index.html"),
         productListing: resolve(__dirname, "src/product_listing/index.html"),
         checkoutSuccess: resolve(__dirname, "src/checkout/success.html"),
+        datasets: resolve(
+          __dirname,
+          "src/exercises/week05-dataset/datasets.html",
+        ),
       },
     },
   },

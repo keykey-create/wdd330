@@ -1,0 +1,89 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #24352d;
+  background: #f4f6f2;
+  line-height: 1.6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+.eyebrow {
+  color: #47614e;
+  font-weight: 700;
+}
+h1 {
+  line-height: 1.2;
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+#items {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+#items li {
+  border: 1px solid #829185;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+li[data-category="fruit"] {
+  background-color: lightyellow;
+}
+li[data-category="vegetable"] {
+  background-color: lightgreen;
+}
+li[data-category="dairy"] {
+  background-color: lightblue;
+}
+button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 3px solid transparent;
+  border-radius: 0.65rem;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+button span {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+button:hover {
+  background: #ffffff66;
+}
+button[aria-pressed="true"] {
+  border-color: #315e40;
+}
+button:focus-visible {
+  outline: 3px solid #183d88;
+  outline-offset: -6px;
+}
+#details {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 0.75rem;
+  border: 1px solid #b6c2b8;
+}
+#details h2 {
+  margin-top: 0;
+}
+#details p:last-child {
+  margin-bottom: 0;
+}

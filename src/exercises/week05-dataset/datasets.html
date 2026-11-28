@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>W05 Learning Activity: Dataset</title>
+    <link rel="stylesheet" href="./datasets.css" />
+    <script type="module" src="./datasets.js"></script>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">WDD 330 · Week 05</p>
+      <h1>Exploring datasets</h1>
+      <p>
+        Select an item to read its custom HTML data attributes. Open the browser
+        console to see every item's data logged on page load.
+      </p>
+      <ul id="items" aria-label="Produce">
+        <li data-name="banana" data-category="fruit" data-color="yellow">
+          <button type="button" aria-pressed="false">
+            Banana <span>Fruit</span>
+          </button>
+        </li>
+        <li data-name="carrot" data-category="vegetable" data-color="orange">
+          <button type="button" aria-pressed="false">
+            Carrot <span>Vegetable</span>
+          </button>
+        </li>
+        <li data-name="blueberry" data-category="fruit" data-color="blue">
+          <button type="button" aria-pressed="false">
+            Blueberry <span>Fruit</span>
+          </button>
+        </li>
+      </ul>
+      <section id="details" aria-live="polite" aria-atomic="true">
+        <h2>Item details</h2>
+        <p>Choose Banana, Carrot, or Blueberry above.</p>
+      </section>
+    </main>
+  </body>
+</html>
